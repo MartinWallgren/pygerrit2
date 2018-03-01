@@ -148,10 +148,12 @@ class GerritRestAPI(object):
             return decoded_response, response
         return decoded_response
 
-    def put(self, endpoint, return_response=False, **kwargs):
+    def put(self, endpoint, return_response=False, raw=False, **kwargs):
         """Send HTTP PUT to the endpoint.
 
         :arg str endpoint: The endpoint to send to.
+        :arg boolean raw: Whether to send as a raw request, i.e. don't set a
+        `Content-Type` header.
 
         :returns:
             JSON decoded result.
@@ -161,7 +163,7 @@ class GerritRestAPI(object):
 
         """
         args = {}
-        if "data" in kwargs or "json" in kwargs:
+        if "data" in kwargs or "json" in kwargs and not raw:
             _merge_dict(
                 args, {
                     "headers": {
@@ -179,10 +181,12 @@ class GerritRestAPI(object):
             return decoded_response, response
         return decoded_response
 
-    def post(self, endpoint, return_response=False, **kwargs):
+    def post(self, endpoint, return_response=False, raw=False, **kwargs):
         """Send HTTP POST to the endpoint.
 
         :arg str endpoint: The endpoint to send to.
+        :arg boolean raw: Whether to send as a raw request, i.e. don't set a
+        `Content-Type` header.
 
         :returns:
             JSON decoded result.
@@ -192,7 +196,7 @@ class GerritRestAPI(object):
 
         """
         args = {}
-        if "data" in kwargs or "json" in kwargs:
+        if "data" in kwargs or "json" in kwargs and not raw:
             _merge_dict(
                 args, {
                     "headers": {
